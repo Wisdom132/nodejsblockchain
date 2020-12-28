@@ -2,7 +2,7 @@ import * as crypto from "crypto";
 interface Block {
   index: number;
   timeStamp: number;
-  transactions: string;
+  transactions: any;
   prevHash: string;
 }
 
@@ -19,12 +19,13 @@ class BlockChain {
     private hash?: string
   ) {}
 
-  objectHasher(object: object) {
-    let stringifedObj = JSON.stringify(object);
-    return crypto.createHash("sha256").update(stringifedObj).digest("hex");
+  objectHasher(data: any) {
+    let payload;
+    typeof data === "object"
+      ? (payload = JSON.stringify(data))
+      : (payload = data);
+    return crypto.createHash("sha256").update(payload).digest("hex");
   }
-
-  validateHash(hash: string) {}
 
   addNewBlock(previousHash: string) {
     //create the block object
@@ -34,6 +35,7 @@ class BlockChain {
       transactions: this.currentTransaction,
       prevHash: previousHash,
     };
+    // this will has hash the block data
     this.hash = this.objectHasher(block);
     //push block to chain
     this.chain.push(block);
@@ -49,13 +51,16 @@ class BlockChain {
     return this.chain.length === 0; // this returns a boolean if it passes the condition;
   }
   getLastBlock() {
-    return this.chain(this.chain.length - 1);
+    return this.chain[this.chain.length - 1];
   }
 }
 
 let blockChain = new BlockChain();
 
-let objHasher = blockChain.objectHasher({ name: "This is the name", age: 3 });
-console.log(objHasher);
+// Mining is the process of adding transaction records to a crypto currency public ledger of past transactions.
 
-// module.exports = BlockChain;
+let PROOF: string = "123";
+
+// let validateProof = proof => {
+//   let hash =
+// }
