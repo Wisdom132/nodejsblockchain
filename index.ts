@@ -1,4 +1,4 @@
-import crypto from "crypto";
+import * as crypto from "crypto";
 interface Block {
   index: number;
   timeStamp: number;
@@ -11,11 +11,12 @@ interface Transaction {
   receiver: string;
   amount: number;
 }
+
 class BlockChain {
   constructor(
-    private chain: any,
-    private currentTransaction: any,
-    private hash: string
+    private chain?: any,
+    private currentTransaction?: any,
+    private hash?: string
   ) {}
 
   objectHasher(object: object) {
@@ -23,10 +24,12 @@ class BlockChain {
     return crypto.createHash("sha256").update(stringifedObj).digest("hex");
   }
 
+  validateHash(hash: string) {}
+
   addNewBlock(previousHash: string) {
     //create the block object
     let block: Block = {
-      index: 1, // write an increment method or create use a package
+      index: this.chain.length + 1, // get the current length of the chains and increament by 1
       timeStamp: Date.now(),
       transactions: this.currentTransaction,
       prevHash: previousHash,
@@ -50,4 +53,9 @@ class BlockChain {
   }
 }
 
-module.exports = BlockChain;
+let blockChain = new BlockChain();
+
+let objHasher = blockChain.objectHasher({ name: "This is the name", age: 3 });
+console.log(objHasher);
+
+// module.exports = BlockChain;
