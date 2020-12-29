@@ -12,7 +12,7 @@ var BlockChain = /** @class */ (function () {
         typeof data === "object"
             ? (payload = JSON.stringify(data))
             : (payload = data);
-        return crypto.createHash("sha256").update(data).digest("hex");
+        return crypto.createHash("sha256").update(payload).digest("hex");
     };
     BlockChain.prototype.addNewBlock = function (previousHash) {
         //create the block object
@@ -43,7 +43,7 @@ var BlockChain = /** @class */ (function () {
     };
     return BlockChain;
 }());
-var blockChain = new BlockChain();
+var blockChain = new BlockChain([], []);
 // Mining is the process of adding transaction records to a crypto currency public ledger of past transactions.
 var PROOF = 312;
 var validateProof = function (proof) {
@@ -66,18 +66,18 @@ var proofChecker = function () {
 };
 //check if valid proof, then create a new block
 if (proofChecker() === PROOF) {
-    console.log("Its ok");
-    // //add transaction
-    // blockChain.addNewTransaction({
-    //   sender: "Wisdom",
-    //   receiver: "favour",
-    //   amount: 100,
-    // });
-    // // get the previous hash...
-    // // grab the last element in the chain
-    // let previousHash = blockChain.getLastBlock().hash
-    //   ? blockChain.getLastBlock().hash
-    //   : null;
-    // blockChain.addNewBlock(previousHash);
+    //add transaction
+    blockChain.addNewTransaction({
+        sender: "Wisdom",
+        receiver: "favour",
+        amount: 100
+    });
+    console.log("Its ok", blockChain.currentTransaction);
+    // get the previous hash...
+    // grab the last element in the chain
+    var previousHash = blockChain.getLastBlock()
+        ? blockChain.getLastBlock().hash
+        : null;
+    blockChain.addNewBlock(previousHash);
 }
-console.log("chain", blockChain.chain);
+console.log("Chain", blockChain.chain);
