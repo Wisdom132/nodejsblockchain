@@ -14,8 +14,8 @@ interface Transaction {
 
 class BlockChain {
   constructor(
-    public chain?: any,
-    public currentTransaction?: any,
+    public chain: Array<any> = [],
+    public currentTransaction: Array<any> = [],
     private hash?: string
   ) {}
 
@@ -59,7 +59,7 @@ class BlockChain {
   }
 }
 
-let blockChain = new BlockChain([], []);
+let blockChain = new BlockChain();
 // Mining is the process of adding transaction records to a crypto currency public ledger of past transactions.
 
 let PROOF: number = 312;

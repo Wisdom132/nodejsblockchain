@@ -3,6 +3,8 @@ exports.__esModule = true;
 var crypto = require("crypto");
 var BlockChain = /** @class */ (function () {
     function BlockChain(chain, currentTransaction, hash) {
+        if (chain === void 0) { chain = []; }
+        if (currentTransaction === void 0) { currentTransaction = []; }
         this.chain = chain;
         this.currentTransaction = currentTransaction;
         this.hash = hash;
@@ -43,7 +45,7 @@ var BlockChain = /** @class */ (function () {
     };
     return BlockChain;
 }());
-var blockChain = new BlockChain([], []);
+var blockChain = new BlockChain();
 // Mining is the process of adding transaction records to a crypto currency public ledger of past transactions.
 var PROOF = 312;
 var validateProof = function (proof) {
