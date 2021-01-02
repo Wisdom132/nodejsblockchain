@@ -66,7 +66,7 @@ let PROOF: number = 312;
 
 let validateProof = (proof: any) => {
   let guessed = blockChain.dataHasher(proof.toString());
-  console.log("Hashing", guessed);
+  console.log("Checking Validity", guessed);
   // check if the hash provided matches the defined hash
   return guessed === blockChain.dataHasher(PROOF.toString());
 };
@@ -88,9 +88,9 @@ let proofChecker = () => {
 if (proofChecker() === PROOF) {
   //add transaction
   blockChain.addNewTransaction({
-    sender: "Wisdom",
-    receiver: "favour",
-    amount: 100,
+    sender: "Wisdom Ekpot",
+    receiver: "John Doe",
+    amount: 1000,
   });
 
   console.log("Its ok", blockChain.currentTransaction);
